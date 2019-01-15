@@ -5,9 +5,7 @@ const getElapsedTime = time => {
 
   const sendTime = new Date();
 
-  console.log('diff', sendTime - time);
-
-  return time;
+  return sendTime - time;
 };
 
 export {

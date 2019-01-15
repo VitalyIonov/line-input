@@ -54,8 +54,11 @@ class LineInput extends Component {
   }
 
   onFocus(e) {
+    const { value } = this.state;
+
     this.setState({
-      isOpenSuggestions: true
+      isOpenSuggestions: true,
+      searchResult: getResultList(value)
     });
     e.target.addEventListener('keypress', this.onEnter);
     document.addEventListener('click', this.clickHandler);
