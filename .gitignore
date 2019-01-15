@@ -1,0 +1,7 @@
+knode_modules
+
+.idea
+.vscode
+.DS_Store
+npm-error.log
+yarn-error.log
