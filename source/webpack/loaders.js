@@ -1,5 +1,7 @@
 const CssExtractPlugin = require('mini-css-extract-plugin');
 
+const { join } = require('path');
+
 function styleLoader(isProduction) {
   const cssLoader = [
     'style-loader',
@@ -33,7 +35,19 @@ function babelLoader() {
   };
 }
 
+function urlLoader() {
+  return {
+    test: /\.(png|jpg|svg|gif)$/,
+    loader: 'url-loader',
+    options: {
+      limit: 32768,
+      name: join('images', '[name].[ext]')
+    }
+  };
+}
+
 module.exports = {
   styleLoader,
-  babelLoader
+  babelLoader,
+  urlLoader
 };

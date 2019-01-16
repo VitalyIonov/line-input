@@ -1,0 +1,142 @@
+.line-input {
+  position: relative;
+  padding: 30px 40px 10px 40px;
+
+  background-color: white;
+}
+
+.line-input__wrapper {
+  display: flex;
+
+  border-bottom: 2px solid black;
+}
+
+.line-input__field {
+  flex-grow: 1;
+  min-width: 0;
+  padding: 10px 0;
+
+  border: none;
+
+  &[placeholder] {
+    text-overflow:ellipsis;
+  }
+
+  &::-moz-placeholder {
+    text-overflow:ellipsis;
+  }
+
+  &:-moz-placeholder {
+    text-overflow:ellipsis;
+  }
+
+  &:-ms-input-placeholder {
+    text-overflow:ellipsis;
+  }
+}
+
+.line-input__icon,
+.line-input__clear {
+  flex-shrink: 0;
+  width: 25px;
+  margin-right: 10px;
+
+  background-color: white;
+
+  cursor: pointer
+}
+
+.line-input__icon {
+  background: url("/images/search-icon.png") no-repeat center;
+  background-size: 18px auto;
+}
+
+.line-input__clear {
+  background: url("/images/clear-icon.png") no-repeat center;
+  background-size: 10px auto;
+
+  &:hover {
+    background-size: 11px auto;
+  }
+}
+
+.line-input__find {
+  flex-shrink: 0;
+
+  color: @main-blue;
+  font-size: 15px;
+  background-color: white;
+
+  cursor: pointer
+}
+
+.line-input__suggestions {
+  position: absolute;
+  left: 0;
+
+  width: 100%;
+
+  background-color: white;
+}
+
+.line-input__suggestions-item {
+  height: 40px;
+  padding-left: 75px;
+
+  line-height: 40px;
+
+  cursor: pointer;
+
+  &:first-child,
+  &:last-child {
+    height: 42px;
+
+    line-height: 42px;
+  }
+
+  &:hover {
+    background-color: @light-blue;
+  }
+}
+
+.line-input__suggestions-item--no-result {
+  &:hover {
+    background-color: @light-red;
+
+    cursor: not-allowed;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .line-input {
+    padding: 15px 20px 5px 20px;
+  }
+
+  .line-input__find {
+    font-size: 12px;
+  }
+
+  .line-input__field {
+    &[placeholder] {
+      font-size: 12px;
+    }
+
+    &::-moz-placeholder {
+      font-size: 12px;
+    }
+
+    &:-moz-placeholder {
+      font-size: 12px;
+    }
+
+    &:-ms-input-placeholder {
+      font-size: 12px;
+    }
+  }
+
+  .line-input__suggestions-item {
+    padding-left: 55px;
+
+    font-size: 12px;
+  }
+}

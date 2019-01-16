@@ -10,7 +10,9 @@ const container = document.getElementById('root');
 
 const Main = () => (
   <BrowserRouter>
-    <LineInput />
+    <section className="form">
+      <LineInput />
+    </section>
   </BrowserRouter>
 );
 

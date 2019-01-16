@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import MarkedText from './marked-text';
+
 import { phrasesList } from './constants/data';
 import { getResultList, getMatchingValue } from './utils/search';
 import { sendValue } from './sources';
@@ -10,6 +12,8 @@ class LineInput extends Component {
 
     this.state = {
       value: '',
+      isFocused: false,
+      isHaveValue: false,
       startInputTime: null,
       matchingValue: null,
       isOpenSuggestions: false,
@@ -49,7 +53,8 @@ class LineInput extends Component {
     this.setState({
       value,
       searchResult: getResultList(value),
-      matchingValue: getMatchingValue(value)
+      matchingValue: getMatchingValue(value),
+      isHaveValue: !!value
     });
   }
 
@@ -58,6 +63,7 @@ class LineInput extends Component {
 
     this.setState({
       isOpenSuggestions: true,
+      isFocused: true,
       searchResult: getResultList(value)
     });
     e.target.addEventListener('keypress', this.onEnter);
@@ -65,6 +71,10 @@ class LineInput extends Component {
   }
 
   onBlur(e) {
+    this.setState({
+      isFocused: false,
+    });
+
     e.target.removeEventListener('keypress', this.onEnter);
   }
 
@@ -89,9 +99,11 @@ class LineInput extends Component {
   }
 
   clickHandler(e) {
-    const lineInput = document.querySelector('.line-input');
+    const lineInput = document.querySelector('#line-input');
 
+    //closest
     if (!lineInput.contains(e.target)) {
+      console.log(e.target);
       this.setState({
         isOpenSuggestions: false
       });
@@ -101,7 +113,7 @@ class LineInput extends Component {
   }
 
   clearInput() {
-    const lineInput = document.querySelector('#line-input');
+    const lineInput = document.querySelector('#input');
 
     lineInput.focus();
 
@@ -113,19 +125,17 @@ class LineInput extends Component {
   }
 
   render() {
-    const { isOpenSuggestions, searchResult, value } = this.state;
+    const { isOpenSuggestions, searchResult, value, isFocused, isHaveValue } = this.state;
 
     return (
-      <section className="line-input">
+      <section id="line-input" className="line-input">
         <div className="line-input__wrapper">
           <button
             className="line-input__icon"
             onClick={() => this.onSendValue('click')}
-          >
-
-          </button>
+          />
           <input
-            id="line-input"
+            id="input"
             className="line-input__field"
             type="text"
             placeholder="Введите слово для поиска"
@@ -134,32 +144,41 @@ class LineInput extends Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
           />
-          <button
-            className="line-input__clear"
-            onClick={this.clearInput}
-          >
-
-          </button>
-          <button
-            className="line-input__find"
-            onClick={() => this.onSendValue('click')}
-          >
-            Найти
-          </button>
+          {isHaveValue && (
+            <button
+              className="line-input__clear"
+              onClick={this.clearInput}
+            />
+          )}
+          {(isHaveValue || isFocused) && (
+            <button
+              className="line-input__find"
+              onClick={() => this.onSendValue('click')}
+            >
+              Найти
+            </button>
+          )}
         </div>
         {isOpenSuggestions && (
           <div className="line-input__suggestions">
             <ul className="line-input__suggestions-list">
-              {searchResult.length !== 0 ? searchResult.map(item => (
-                <li
-                  className="line-input__suggestions-item"
-                  key={item.id}
-                  onClick={() => this.onSuggestionChoice(item)}
-                >
-                  {item.text}
-                </li>
-              )) :
-              <li>No result</li>
+              {searchResult.length !== 0 ? searchResult.map(item => {
+                return (
+                  <li
+                    className="line-input__suggestions-item"
+                    key={item.id}
+                    onClick={() => this.onSuggestionChoice(item)}
+                  >
+                    <MarkedText
+                      text={item.text}
+                      value={value}
+                    />
+                  </li>
+                  );
+                }) :
+              <li className="line-input__suggestions-item line-input__suggestions-item--no-result">
+                No result
+              </li>
               }
             </ul>
           </div>

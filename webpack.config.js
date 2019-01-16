@@ -1,4 +1,4 @@
-const { styleLoader, babelLoader } = require('./source/webpack/loaders');
+const { styleLoader, babelLoader, urlLoader } = require('./source/webpack/loaders');
 const { developmentPlugins, productionPlugins } = require('./source/webpack/plugins');
 
 const { join } = require('path');
@@ -11,7 +11,7 @@ const isProduction = nodeEnv === 'production';
 const inputPath = join(__dirname, 'source');
 const outputPath = join(__dirname, 'dist');
 
-const plugins = developmentPlugins(nodeEnv, isProduction);
+const plugins = developmentPlugins(nodeEnv, isProduction, inputPath, outputPath);
 
 module.exports = {
   context: inputPath,
@@ -30,7 +30,8 @@ module.exports = {
   module: {
     rules: [
       babelLoader(),
-      styleLoader(isProduction)
+      styleLoader(isProduction),
+      urlLoader()
     ]
   },
 
