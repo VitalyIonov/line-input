@@ -1,14 +1,6 @@
-import { getElapsedTime } from './utils/time';
-
-const sendValue = (value, matchingValue, type, startInputTime) => {
-  const result = {
-    data: matchingValue || value,
-    type,
-    elapsedTime: getElapsedTime(startInputTime)
-  };
-
+const sendValue = query => {
   const requestSettings = {
-    body: JSON.stringify(result),
+    body: JSON.stringify(query),
     headers: {
       'Content-Type': 'application/json'
     },

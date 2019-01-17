@@ -33,6 +33,10 @@
   &:-ms-input-placeholder {
     text-overflow:ellipsis;
   }
+
+  &:focus ~ .line-input__find {
+    display: block;
+  }
 }
 
 .line-input__icon,
@@ -52,6 +56,7 @@
 }
 
 .line-input__clear {
+  display: none;
   background: url("/images/clear-icon.png") no-repeat center;
   background-size: 10px auto;
 
@@ -60,7 +65,12 @@
   }
 }
 
+.line-input__clear--show {
+  display: block;
+}
+
 .line-input__find {
+  display: none;
   flex-shrink: 0;
 
   color: @main-blue;
@@ -68,6 +78,10 @@
   background-color: white;
 
   cursor: pointer
+}
+
+.line-input__find--show {
+  display: block;
 }
 
 .line-input__suggestions {
@@ -80,12 +94,12 @@
 }
 
 .line-input__suggestions-item {
+  display: flex;
+
   height: 40px;
   padding-left: 75px;
 
   line-height: 40px;
-
-  cursor: pointer;
 
   &:first-child,
   &:last-child {
@@ -97,6 +111,15 @@
   &:hover {
     background-color: @light-blue;
   }
+}
+
+.line-input__suggestions-button {
+  flex-grow: 1;
+
+  background-color: transparent;
+  text-align: left;
+
+  cursor: pointer;
 }
 
 .line-input__suggestions-item--no-result {
